@@ -53,5 +53,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "openxr_mx_ink.sln"
+    "dotnet.defaultSolution": "lauzhack-2024.sln"
 }
