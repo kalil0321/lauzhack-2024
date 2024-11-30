@@ -9,8 +9,8 @@ public class LineDrawing : MonoBehaviour
     private LineRenderer _currentLine;
     private List<float> _currentLineWidths = new List<float>(); //list to store line widths
 
-    [SerializeField] float _maxLineWidth = 0.01f;
-    [SerializeField] float _minLineWidth = 0.0005f;
+    [SerializeField] float _maxLineWidth = 0.02f;
+    [SerializeField] float _minLineWidth = 0.001f;
 
     [SerializeField] Material _material;
 
@@ -137,7 +137,7 @@ public class LineDrawing : MonoBehaviour
                 StartNewLine();
                 _isDrawing = true;
             }
-            AddPoint(Stylus.CurrentState.inkingPose.position, _lineWidthIsFixed ? 1.0f : analogInput);
+            AddPoint(Stylus.hitPosition, _lineWidthIsFixed ? 1.0f : analogInput);
             //change point here
         }
         else
