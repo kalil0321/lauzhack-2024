@@ -138,6 +138,7 @@ public class LineDrawing : MonoBehaviour
                 _isDrawing = true;
             }
             AddPoint(Stylus.CurrentState.inkingPose.position, _lineWidthIsFixed ? 1.0f : analogInput);
+            //change point here
         }
         else
         {
