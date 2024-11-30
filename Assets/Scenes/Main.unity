@@ -478,6 +478,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1888956113}
     - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: active_color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: active_color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: active_color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: default_color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: default_color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: default_color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
       propertyPath: planeLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -485,6 +509,30 @@ PrefabInstance:
       propertyPath: blueprint
       value: 
       objectReference: {fileID: 1888956113}
+    - target: {fileID: 3381322292072300569, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: active_color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381322292072300569, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: active_color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381322292072300569, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: active_color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381322292072300569, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: default_color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381322292072300569, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: default_color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381322292072300569, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: default_color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3381322292072300569, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
       propertyPath: planeLayer.m_Bits
       value: 64
@@ -610,7 +658,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: dbad5dbfad3a5254b8b9c93a77dd1178, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -657,16 +705,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
+      propertyPath: gridSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
+      propertyPath: pointPrefab
+      value: 
+      objectReference: {fileID: 3432032278334199803, guid: f1740f51e9eed7e4aa22b1302fc90285, type: 3}
+    - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
       propertyPath: _currentColor.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
       propertyPath: _currentColor.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
       propertyPath: _currentColor.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5813962334383774754, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -758,7 +814,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b3d3448e1bd314e85e00e45d91b010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numGridLines: 10
+  gridSize: 10
   plane: {fileID: 1744548954}
+  lineMaterial: {fileID: 0}
+  planeSize: 10
+  pointPrefab: {fileID: 3432032278334199803, guid: f1740f51e9eed7e4aa22b1302fc90285, type: 3}
 --- !u!1 &2089581583
 GameObject:
   m_ObjectHideFlags: 0

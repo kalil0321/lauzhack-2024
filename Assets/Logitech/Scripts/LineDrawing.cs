@@ -1,4 +1,104 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LineDrawing : MonoBehaviour
+{
+    public GameObject plane; // Reference to the plane
+    public Material lineMaterial; // Material for the line renderer
+    public float gridSize = 10.0f; // Size of each grid square
+
+    private LineRenderer currentLine; // The current line being drawn
+    private bool isDrawing = false; // Tracks whether the stylus is currently drawing
+    public MxInkHandler Stylus;
+    public GameObject pointer; // Prefab of the point (e.g., small sphere or cube)
+    public GameObject pointPrefab; // Prefab of the point (e.g., small sphere or cube)
+    public Vector3 epsilon = new Vector3(0f, 0.05f, 0f);
+
+    void Start()
+    {
+        pointer = Instantiate(pointPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+    }
+
+    void Update()
+    {
+        if (!Stylus) return;
+        // Check if the stylus is ready to draw
+        Vector3 stylusPosition = Stylus.hitPosition;
+        pointer.transform.position = stylusPosition;
+        // Snap the position to the nearest grid point
+        Vector3 snappedPosition = FindNearestGridCorner(stylusPosition.x, stylusPosition.z);
+        if (IsStylusReadyToDraw())
+        {
+            
+            if (!isDrawing)
+            {
+                // Start a new line
+                StartNewLine(snappedPosition+epsilon);
+                isDrawing = true;
+            }
+            else
+            {
+                // Update the second point of the current line
+                UpdateLine(stylusPosition+epsilon);
+            }
+        }
+        else
+        {
+            // Reset drawing state when the stylus is not ready to draw
+            if (isDrawing)
+            {
+                isDrawing = false;
+                UpdateLine(snappedPosition+epsilon);
+                currentLine = null;
+            }
+        }
+    }
+
+    bool IsStylusReadyToDraw()
+    {
+        // Replace this with your stylus input check (e.g., analog input > 0)
+        return Mathf.Max(Stylus.CurrentState.tip_value, Stylus.CurrentState.cluster_middle_value)>0; // Placeholder: Replace with actual stylus analog input
+    }
+
+    Vector3 FindNearestGridCorner(float x, float z)
+    {
+        float snappedX = Mathf.Round(x);
+        float snappedZ = Mathf.Round(z);
+        //fix this maths for grid snap
+        return new Vector3(snappedX, 0, snappedZ);
+    }
+
+    void StartNewLine(Vector3 startPosition)
+    {
+        GameObject lineObject = new GameObject("Line");
+        currentLine = lineObject.AddComponent<LineRenderer>();
+
+        // Configure the LineRenderer
+        currentLine.positionCount = 2;
+        currentLine.startWidth = 0.05f;
+        currentLine.endWidth = 0.05f;
+        currentLine.material = lineMaterial != null ? lineMaterial : new Material(Shader.Find("Sprites/Default"));
+        currentLine.startColor = Color.white;
+        currentLine.endColor = Color.white;
+
+        // Set the initial points
+        currentLine.SetPosition(0, startPosition);
+        currentLine.SetPosition(1, startPosition); // Second point will be updated
+    }
+
+    void UpdateLine(Vector3 currentPosition)
+    {
+        if (currentLine != null)
+        {
+            // Update the second point of the line
+            currentLine.SetPosition(1, currentPosition);
+        }
+    }
+}
+
+
+/*using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -9,8 +109,8 @@ public class LineDrawing : MonoBehaviour
     private LineRenderer _currentLine;
     private List<float> _currentLineWidths = new List<float>(); //list to store line widths
 
-    [SerializeField] float _maxLineWidth = 0.02f;
-    [SerializeField] float _minLineWidth = 0.001f;
+    [SerializeField] float _maxLineWidth = 0.1f;
+    [SerializeField] float _minLineWidth = 0.05f;
 
     [SerializeField] Material _material;
 
@@ -48,6 +148,8 @@ public class LineDrawing : MonoBehaviour
 
     private Vector3 _previousLinePoint;
     private const float _minDistanceBetweenLinePoints = 0.0005f;
+
+    public float gridSize;
 
     private void StartNewLine()
     {
@@ -165,4 +267,14 @@ public class LineDrawing : MonoBehaviour
             _doubleTapDetected = false;
         }
     }
+    public Vector3 FindNearestGridCorner(float x, float z)
+    {
+        // Snap x and z to the nearest multiple of gridSize
+        float snappedX = Mathf.Round(x / gridSize) * gridSize;
+        float snappedZ = Mathf.Round(z / gridSize) * gridSize;
+
+        // Return the nearest corner as a Vector3
+        return new Vector3(snappedX, 0, snappedZ);
+    }
 }
+*/
