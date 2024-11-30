@@ -5,10 +5,9 @@ using UnityEngine.InputSystem;
 
 public class MxInkHandler : StylusHandler
 {
-    public Color active_color = Color.gray;
+    public Color active_color = Color.black;
     public Color double_tap_active_color = Color.cyan;
     public Color default_color = Color.black;
-
     [SerializeField]
     private InputActionReference _tipActionRef;
     [SerializeField]
@@ -58,6 +57,7 @@ public class MxInkHandler : StylusHandler
     {
         _stylus.inkingPose.position = transform.position;
         _stylus.inkingPose.rotation = transform.rotation;
+
         _stylus.tip_value = _tipActionRef.action.ReadValue<float>();
         _stylus.cluster_middle_value = _middleActionRef.action.ReadValue<float>();
         _stylus.cluster_front_value = _grabActionRef.action.IsPressed();

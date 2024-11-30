@@ -130,7 +130,6 @@ public class LineDrawing : MonoBehaviour
         if (!Stylus) return;
 
         float analogInput = Mathf.Max(Stylus.CurrentState.tip_value, Stylus.CurrentState.cluster_middle_value);
-
         if (analogInput > 0 && Stylus.CanDraw())
         {
             if (!_isDrawing)
