@@ -3,9 +3,12 @@ using UnityEngine;
 public class LineRendererTo3D : MonoBehaviour
 {
     [Header("Settings")]
-    public LineRenderer lineRenderer;  // Assign the Line Renderer here
-    public float wallHeight = 3f;      // Height of the walls
-    public Material wallMaterial;     // Optional material for the walls
+    public LineRenderer lineRenderer;      // Assign the Line Renderer here
+    public float wallHeight = 3f;          // Height of the walls
+    public Material wallMaterial;         // Material for walls
+    public Color wallColor = Color.black; // Color for wall segments
+    public Color doorColor = Color.yellow; // Color for door segments
+    public GameObject doorPrefab;         // Assign a door prefab here (optional)
 
     void Start()
     {
@@ -34,13 +37,28 @@ public class LineRendererTo3D : MonoBehaviour
         // Create a new GameObject to hold the 3D floor plan
         GameObject floorPlan3D = new GameObject("3D Floor Plan");
 
-        // Generate walls based on the Line Renderer points
-        for (int i = 0; i < pointCount; i++)
+        // Generate walls based on the Line Renderer points and colors
+        for (int i = 0; i < pointCount - 1; i++) // Do not loop back to the first point
         {
             Vector3 start = points[i];
-            Vector3 end = points[(i + 1) % pointCount]; // Loop back to the first point if needed
+            Vector3 end = points[i + 1];
 
-            CreateWallSegment(floorPlan3D.transform, start, end);
+            // Check the color of the current segment
+            Color segmentColor = lineRenderer.startColor; // Line Renderer can only have one color per segment in simple mode
+
+            if (segmentColor == wallColor)
+            {
+                CreateWallSegment(floorPlan3D.transform, start, end);
+            }
+            else if (segmentColor == doorColor && doorPrefab != null)
+            {
+                PlaceDoor(floorPlan3D.transform, start, end);
+            }
+            else
+            {
+                // Default to creating a wall for any other color
+                CreateWallSegment(floorPlan3D.transform, start, end);
+            }
         }
     }
 
@@ -63,5 +81,21 @@ public class LineRendererTo3D : MonoBehaviour
             Renderer renderer = wall.GetComponent<Renderer>();
             renderer.material = wallMaterial;
         }
+    }
+
+    void PlaceDoor(Transform parent, Vector3 start, Vector3 end)
+    {
+        // Calculate door position and orientation
+        Vector3 direction = end - start;
+        Vector3 position = start + direction / 2;
+        Quaternion rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+
+        // Instantiate the door prefab
+        GameObject door = Instantiate(doorPrefab, position, rotation, parent);
+
+        // Optionally adjust the door size and position to match the segment
+        Vector3 doorScale = door.transform.localScale;
+        doorScale.x = direction.magnitude; // Set door width to match the segment length
+        door.transform.localScale = doorScale;
     }
 }
