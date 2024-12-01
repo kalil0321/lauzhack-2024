@@ -582,6 +582,58 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+--- !u!1 &1561358057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1561358059}
+  - component: {fileID: 1561358058}
+  m_Layer: 0
+  m_Name: BuildingGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1561358058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561358057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8461852d850414b41a5f6ac708178599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallHeight: 2
+  wallMaterial: {fileID: 2100000, guid: 63c030353bfacdc48851055cf9d01a47, type: 2}
+  wallColor: {r: 1, g: 1, b: 1, a: 1}
+  doorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  doorPrefab: {fileID: 0}
+  doorMaterial: {fileID: 2100000, guid: 963dc1c235290c54d80bae97baac068e, type: 2}
+  lines: []
+  toDraw: 0
+--- !u!4 &1561358059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561358057}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1744548954
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +772,10 @@ PrefabInstance:
       propertyPath: epsilon.z
       value: -0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
+      propertyPath: buildingGen
+      value: 
+      objectReference: {fileID: 1561358058}
     - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
       propertyPath: pointPrefab
       value: 
@@ -896,3 +952,4 @@ SceneRoots:
   - {fileID: 1843984175}
   - {fileID: 1888956114}
   - {fileID: 1473660683}
+  - {fileID: 1561358059}
