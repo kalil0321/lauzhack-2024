@@ -433,7 +433,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 963dc1c235290c54d80bae97baac068e, type: 2}
+  - {fileID: 2100000, guid: c32ccfd2c383dd642b68df3e553ab465, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -879,6 +879,14 @@ PrefabInstance:
       propertyPath: buttonLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 4686265556690451383, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: m_UseRelativeTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7439104143098642545, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: m_UseRelativeTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9082205288433658024, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -962,7 +970,8 @@ MonoBehaviour:
   lines: []
   toDraw: 0
   hasDrawn: 0
-  floorMaterial: {fileID: 2100000, guid: 2f5aab5a7a5aa1145997d0e48dc10332, type: 2}
+  floorMaterial: {fileID: 2100000, guid: 63c030353bfacdc48851055cf9d01a47, type: 2}
+  rig: {fileID: 184503653}
 --- !u!4 &1561358059
 Transform:
   m_ObjectHideFlags: 0
