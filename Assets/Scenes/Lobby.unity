@@ -2428,6 +2428,7 @@ GameObject:
   - component: {fileID: 1751263134}
   - component: {fileID: 1751263133}
   - component: {fileID: 1751263132}
+  - component: {fileID: 1751263135}
   m_Layer: 5
   m_Name: archiButton
   m_TagString: Untagged
@@ -2549,6 +2550,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751263130}
   m_CullTransparentMesh: 1
+--- !u!114 &1751263135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751263130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da13c662d5b171b4b8fddbad332722f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 0}
+  rayOrigin: {fileID: 0}
+  rayLength: 10
+  controllerTransform: {fileID: 2089581584}
 --- !u!1001 &1843984175
 PrefabInstance:
   m_ObjectHideFlags: 0
