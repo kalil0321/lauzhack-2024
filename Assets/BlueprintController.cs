@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class BlueprintController : MonoBehaviour
 {
-    public int numGridLines = 10; // Number of grid divisions
-    public float gridSize = 10.0f; // Size of the grid (length and width of the plane)
+    public int numGridLines = 20; // Number of grid divisions
+    public float gridSize = 5.0f;//10.0f; // Size of the grid (length and width of the plane)
     public GameObject plane; // Reference to the plane GameObject
     public Material lineMaterial; // Material for the grid lines
-    public float planeSize = 10.0f; // Size of the plane (10x10 units)
+    public float planeSize = 5.0f;//10.0f; // Size of the plane (10x10 units)
     public GameObject pointPrefab; // Prefab of the point (e.g., small sphere or cube)
+    public float epsilon = 0.05f;
 
     // Start is called before the first frame update
     void Start()
     {
-        gridSize *= plane.transform.localScale.x;
+        //gridSize *= plane.transform.localScale.x;
         InitGridLines();
         //DrawPointsAtGridCorners();
     }
@@ -37,7 +38,6 @@ public class BlueprintController : MonoBehaviour
         Vector3 planePosition = plane.transform.position;
         float halfGridSize = gridSize / 2.0f; // Half size for centering the grid
         float spacing = gridSize / (numGridLines); // Distance between lines
-
         // Draw vertical and horizontal lines
         for (int i = 0; i <= numGridLines; i++)
         {
@@ -45,14 +45,14 @@ public class BlueprintController : MonoBehaviour
 
             // Draw vertical line
             DrawLine(
-                new Vector3(planePosition.x + offset, planePosition.y, planePosition.z - halfGridSize),
-                new Vector3(planePosition.x + offset, planePosition.y, planePosition.z + halfGridSize)
+                new Vector3(planePosition.x + offset, planePosition.y - halfGridSize, planePosition.z-epsilon/5/*- halfGridSize*/),
+                new Vector3(planePosition.x + offset, planePosition.y + halfGridSize, planePosition.z-epsilon/5/* + halfGridSize*/)
             );
 
             // Draw horizontal line
             DrawLine(
-                new Vector3(planePosition.x - halfGridSize, planePosition.y, planePosition.z + offset),
-                new Vector3(planePosition.x + halfGridSize, planePosition.y, planePosition.z + offset)
+                new Vector3(planePosition.x - halfGridSize, planePosition.y + offset, planePosition.z-epsilon/5/* + offset*/),
+                new Vector3(planePosition.x + halfGridSize, planePosition.y + offset, planePosition.z-epsilon/5/* + offset*/)
             );
         }
     }
@@ -62,7 +62,8 @@ public class BlueprintController : MonoBehaviour
         // Create a new GameObject for the line
         GameObject lineObject = new GameObject("GridLine");
         LineRenderer lineRenderer = lineObject.AddComponent<LineRenderer>();
-
+        lineRenderer.sortingLayerName = "GridLayer";
+        lineRenderer.sortingOrder = 0;
         // Set up the LineRenderer
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, start);
