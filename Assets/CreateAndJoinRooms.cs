@@ -6,6 +6,8 @@ using Photon.Pun;
 
 public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
+    public bool host;
+
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom("1234");
@@ -20,5 +22,17 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("Main");
+    }
+
+    void Update()
+    {
+        if (host)
+        {
+            CreateRoom();
+        }
+        else
+        {
+            JoinRoom();
+        }
     }
 }
