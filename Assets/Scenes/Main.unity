@@ -713,13 +713,21 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
+      propertyPath: epsilon.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
+      propertyPath: epsilon.z
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
       propertyPath: pointPrefab
       value: 
       objectReference: {fileID: 3432032278334199803, guid: f1740f51e9eed7e4aa22b1302fc90285, type: 3}
     - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
       propertyPath: lineMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 63c030353bfacdc48851055cf9d01a47, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2467874878798025286, guid: 409a07891ba39f045b59397c44c20ffd, type: 3}
       propertyPath: _currentColor.b
       value: 1

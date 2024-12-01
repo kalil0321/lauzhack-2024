@@ -15,12 +15,13 @@ public class LineDrawing : MonoBehaviour
     public GameObject pointPrefab; // Prefab of the point (e.g., small sphere or cube)
     public Vector3 epsilon = new Vector3(0f, 0f, -0.02f);
 
-    public Color[] colors = { Color.white, Color.red };
+    private Color[] colors;
 
     public int colorIndex = 0;
 
     void Start()
     {
+        colors = new Color[] { Color.white, Color.red };
         pointer = Instantiate(pointPrefab, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
