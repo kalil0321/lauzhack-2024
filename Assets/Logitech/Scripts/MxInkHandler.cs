@@ -8,6 +8,8 @@ public class MxInkHandler : StylusHandler
     public Color active_color = Color.black;
     public Color double_tap_active_color = Color.cyan;
     public Color default_color = Color.black;
+    public GameObject blueprint;
+    public Vector3 hitPosition;
     [SerializeField]
     private InputActionReference _tipActionRef;
     [SerializeField]
@@ -22,6 +24,8 @@ public class MxInkHandler : StylusHandler
     [SerializeField] private GameObject _cluster_front;
     [SerializeField] private GameObject _cluster_middle;
     [SerializeField] private GameObject _cluster_back;
+    [SerializeField] private LayerMask planeLayer;  // Layer mask for the plane you want to raycast against
+    [SerializeField] private float maxRaycastDistance = 100f;
     private void Awake()
     {
         _tipActionRef.action.Enable();
@@ -58,10 +62,32 @@ public class MxInkHandler : StylusHandler
         _stylus.inkingPose.position = transform.position;
         _stylus.inkingPose.rotation = transform.rotation;
 
-        _stylus.tip_value = _tipActionRef.action.ReadValue<float>();
-        _stylus.cluster_middle_value = _middleActionRef.action.ReadValue<float>();
-        _stylus.cluster_front_value = _grabActionRef.action.IsPressed();
-        _stylus.cluster_back_value = _optionActionRef.action.IsPressed();
+        Ray stylusRay = new Ray(transform.position, transform.rotation * Vector3.forward);
+
+        if(Physics.Raycast(stylusRay, out RaycastHit hitInfo, maxRaycastDistance, planeLayer))
+        {
+            // If the ray hits something, output the point of intersection
+            //Debug.Log("Ray hit at: " + hitInfo.point);
+            _stylus.tip_value = _tipActionRef.action.ReadValue<float>();
+            _stylus.cluster_middle_value = _middleActionRef.action.ReadValue<float>();
+            _stylus.cluster_front_value = _grabActionRef.action.IsPressed();
+            _stylus.cluster_back_value = _optionActionRef.action.IsPressed();
+            hitPosition = hitInfo.point;
+        }
+        else
+        {
+            // If no hit, log that the ray missed
+            //Debug.Log("Ray did not hit any plane.");
+            _stylus.tip_value = 0f;
+            _stylus.cluster_middle_value = 0f;
+            _stylus.cluster_front_value = false;
+            _stylus.cluster_back_value = false;
+        }
+
+        //_stylus.tip_value = _tipActionRef.action.ReadValue<float>();
+        //_stylus.cluster_middle_value = _middleActionRef.action.ReadValue<float>();
+        //_stylus.cluster_front_value = _grabActionRef.action.IsPressed();
+        //_stylus.cluster_back_value = _optionActionRef.action.IsPressed();
 
         _tip.GetComponent<MeshRenderer>().material.color = _stylus.tip_value > 0 ? active_color : default_color;
         _cluster_front.GetComponent<MeshRenderer>().material.color = _stylus.cluster_front_value ? active_color : default_color;
