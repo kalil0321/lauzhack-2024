@@ -7,13 +7,15 @@ public class LineDrawing : MonoBehaviour
     public GameObject plane; // Reference to the plane
     public Material lineMaterial; // Material for the line renderer
     public float gridSize = 5.0f;//10.0f; // Size of each grid square
-
+    public LineTo3D buildingGen;
     private LineRenderer currentLine; // The current line being drawn
     private bool isDrawing = false; // Tracks whether the stylus is currently drawing
     public MxInkHandler Stylus;
     public GameObject pointer; // Prefab of the point (e.g., small sphere or cube)
     public GameObject pointPrefab; // Prefab of the point (e.g., small sphere or cube)
     public Vector3 epsilon = new Vector3(0f, 0f, -0.02f);
+    private List<GameObject> lines;
+
 
     private Color[] colors;
 
@@ -21,6 +23,7 @@ public class LineDrawing : MonoBehaviour
 
     void Start()
     {
+        lines = new List<GameObject>();
         colors = new Color[] { Color.white, Color.red };
         pointer = Instantiate(pointPrefab, new Vector3(0, 0, 0), Quaternion.identity);
     }
@@ -36,6 +39,9 @@ public class LineDrawing : MonoBehaviour
         // Check if the stylus is ready to draw
         Vector3 stylusPosition = Stylus.hitPosition;
         pointer.transform.position = stylusPosition;
+        if (Stylus.hitButton) {
+            pointer.transform.position = Stylus.hitPosition2;
+        }
         // Snap the position to the nearest grid point
         Vector3 snappedPosition = FindNearestGridCorner(stylusPosition.x, stylusPosition.y);//bit hacky for now, change to z if necessary
         if (IsStylusReadyToDraw())
@@ -44,13 +50,13 @@ public class LineDrawing : MonoBehaviour
             if (!isDrawing)
             {
                 // Start a new line
-                StartNewLine(snappedPosition+epsilon);
+                StartNewLine(snappedPosition + epsilon);
                 isDrawing = true;
             }
             else
             {
                 // Update the second point of the current line
-                UpdateLine(stylusPosition+epsilon);
+                UpdateLine(stylusPosition + epsilon);
             }
         }
         else
@@ -59,17 +65,26 @@ public class LineDrawing : MonoBehaviour
             if (isDrawing)
             {
                 isDrawing = false;
-                UpdateLine(snappedPosition+epsilon);
+                UpdateLine(snappedPosition + epsilon);
                 currentLine = null;
             }
         }
-        if (Stylus.CurrentState.cluster_back_value)
+
+        if (Stylus.hitRed)
         {
             colorIndex = 1;
         }
-        if (Stylus.CurrentState.cluster_front_value) {
+        else if (Stylus.hitWhite)
+        {
             colorIndex = 0;
         }
+        else if (Stylus.hitComplete) {
+            buildingGen.toDraw = true;
+        }
+        //if (Stylus.CurrentState.cluster_front_value) {
+        //    TriggerHaptics();
+        //    colorIndex = 0;
+        //}
     }
 
     bool IsStylusReadyToDraw()
@@ -92,12 +107,14 @@ public class LineDrawing : MonoBehaviour
         float snappedZ = Mathf.Round(4*z)/4;
         //fix this maths for grid snap
         //return new Vector3(snappedX, 0, snappedZ);
+        buildingGen.lines = lines;
         return new Vector3(snappedX, snappedZ, plane.transform.position.z-0.05f);
     }
 
     void StartNewLine(Vector3 startPosition)
     {
         GameObject lineObject = new GameObject("Line");
+        lines.Add(lineObject);
         currentLine = lineObject.AddComponent<LineRenderer>();
         currentLine.sortingLayerName = "DrawnLine";
         currentLine.sortingOrder = 1;
