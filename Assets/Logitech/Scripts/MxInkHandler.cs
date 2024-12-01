@@ -25,7 +25,6 @@ public class MxInkHandler : StylusHandler
     private float _hapticClickDuration = 0.011f;
     private float _hapticClickAmplitude = 1.0f;
     public LayerMask buttonLayer;
-    public LayerMask ServerSetup;
     public bool hitButton;
     [SerializeField] private GameObject _tip;
     [SerializeField] private GameObject _cluster_front;
@@ -101,26 +100,6 @@ public class MxInkHandler : StylusHandler
                     hitRed = false;
                 }
                 else if (hitInfo2.collider.CompareTag("SelR") && _stylus.cluster_back_value)
-                {
-                    hitRed = true;
-                    hitWhite = false;
-                }
-                else if (_stylus.cluster_back_value)
-                {
-                    hitComplete = true;
-                }
-            }
-            else if (Physics.Raycast(stylusRay, out RaycastHit hitInfo3, maxRaycastDistance, ServerSetup))
-            {
-                hitButton = true;
-                _stylus.cluster_back_value = _optionActionRef.action.IsPressed();
-                hitPosition2 = hitInfo3.point;
-                if (hitInfo3.collider.CompareTag("SelW") && _stylus.cluster_back_value)
-                {
-                    hitWhite = true;
-                    hitRed = false;
-                }
-                else if (hitInfo3.collider.CompareTag("SelR") && _stylus.cluster_back_value)
                 {
                     hitRed = true;
                     hitWhite = false;

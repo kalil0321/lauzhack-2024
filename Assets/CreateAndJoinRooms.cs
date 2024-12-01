@@ -1,12 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
 
 public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
     public bool host;
+    private bool isReadyToCreateOrJoinRoom = false;
+
+    void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        Debug.Log("Connected to Master Server");
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("Joined Lobby");
+        isReadyToCreateOrJoinRoom = true;
+    }
 
     public void CreateRoom()
     {
@@ -18,7 +35,6 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom("1234");
     }
 
-
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("Main");
@@ -26,13 +42,17 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (host)
+        if (isReadyToCreateOrJoinRoom)
         {
-            CreateRoom();
-        }
-        else
-        {
-            JoinRoom();
+            if (host)
+            {
+                CreateRoom();
+            }
+            else
+            {
+                JoinRoom();
+            }
+            isReadyToCreateOrJoinRoom = false; // Ensure we only try to create or join the room once
         }
     }
 }

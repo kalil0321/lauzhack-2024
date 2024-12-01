@@ -39,7 +39,8 @@ public class LineDrawing : MonoBehaviour
         // Check if the stylus is ready to draw
         Vector3 stylusPosition = Stylus.hitPosition;
         pointer.transform.position = stylusPosition;
-        if (Stylus.hitButton) {
+        if (Stylus.hitButton)
+        {
             pointer.transform.position = Stylus.hitPosition2;
         }
         // Snap the position to the nearest grid point
@@ -78,7 +79,8 @@ public class LineDrawing : MonoBehaviour
         {
             colorIndex = 0;
         }
-        else if (Stylus.hitComplete) {
+        else if (Stylus.hitComplete)
+        {
             buildingGen.toDraw = true;
         }
         //if (Stylus.CurrentState.cluster_front_value) {
@@ -90,7 +92,7 @@ public class LineDrawing : MonoBehaviour
     bool IsStylusReadyToDraw()
     {
         // Replace this with your stylus input check (e.g., analog input > 0)
-        return Mathf.Max(Stylus.CurrentState.tip_value, Stylus.CurrentState.cluster_middle_value)>0; // Placeholder: Replace with actual stylus analog input
+        return Mathf.Max(Stylus.CurrentState.tip_value, Stylus.CurrentState.cluster_middle_value) > 0; // Placeholder: Replace with actual stylus analog input
     }
 
     private void TriggerHaptics()
@@ -103,12 +105,12 @@ public class LineDrawing : MonoBehaviour
 
     Vector3 FindNearestGridCorner(float x, float z)
     {
-        float snappedX = Mathf.Round(4*x)/4;
-        float snappedZ = Mathf.Round(4*z)/4;
+        float snappedX = Mathf.Round(4 * x) / 4;
+        float snappedZ = Mathf.Round(4 * z) / 4;
         //fix this maths for grid snap
         //return new Vector3(snappedX, 0, snappedZ);
         buildingGen.lines = lines;
-        return new Vector3(snappedX, snappedZ, plane.transform.position.z-0.05f);
+        return new Vector3(snappedX, snappedZ, plane.transform.position.z - 0.05f);
     }
 
     void StartNewLine(Vector3 startPosition)

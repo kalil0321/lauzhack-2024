@@ -840,6 +840,10 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
+      propertyPath: ServerSetup.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686364509787062166, guid: 4578fcaa6cde11c4f95220c7a57f9b66, type: 3}
       propertyPath: buttonLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
@@ -1016,7 +1020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2994e17510e553e02a6d287a117e7493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  host: 0
+  host: 1
 --- !u!4 &1666679680
 Transform:
   m_ObjectHideFlags: 0
