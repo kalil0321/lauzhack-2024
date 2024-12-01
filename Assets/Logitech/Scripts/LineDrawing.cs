@@ -39,6 +39,9 @@ public class LineDrawing : MonoBehaviour
         // Check if the stylus is ready to draw
         Vector3 stylusPosition = Stylus.hitPosition;
         pointer.transform.position = stylusPosition;
+        if (Stylus.hitButton) {
+            pointer.transform.position = Stylus.hitPosition2;
+        }
         // Snap the position to the nearest grid point
         Vector3 snappedPosition = FindNearestGridCorner(stylusPosition.x, stylusPosition.y);//bit hacky for now, change to z if necessary
         if (IsStylusReadyToDraw())
@@ -47,13 +50,13 @@ public class LineDrawing : MonoBehaviour
             if (!isDrawing)
             {
                 // Start a new line
-                StartNewLine(snappedPosition+epsilon);
+                StartNewLine(snappedPosition + epsilon);
                 isDrawing = true;
             }
             else
             {
                 // Update the second point of the current line
-                UpdateLine(stylusPosition+epsilon);
+                UpdateLine(stylusPosition + epsilon);
             }
         }
         else
@@ -62,19 +65,26 @@ public class LineDrawing : MonoBehaviour
             if (isDrawing)
             {
                 isDrawing = false;
-                UpdateLine(snappedPosition+epsilon);
+                UpdateLine(snappedPosition + epsilon);
                 currentLine = null;
             }
         }
-        if (Stylus.CurrentState.cluster_back_value)
+
+        if (Stylus.hitRed)
         {
-            TriggerHaptics();
             colorIndex = 1;
         }
-        if (Stylus.CurrentState.cluster_front_value) {
-            TriggerHaptics();
+        else if (Stylus.hitWhite)
+        {
             colorIndex = 0;
         }
+        else if (Stylus.hitComplete) {
+            buildingGen.toDraw = true;
+        }
+        //if (Stylus.CurrentState.cluster_front_value) {
+        //    TriggerHaptics();
+        //    colorIndex = 0;
+        //}
     }
 
     bool IsStylusReadyToDraw()

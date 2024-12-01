@@ -14,6 +14,8 @@ public class LineTo3D : MonoBehaviour
     public Material doorMaterial;
     public List<GameObject> lines;
     public bool toDraw = false;
+    public bool hasDrawn = false;
+    public Material floorMaterial;
 
     void Start()
     {
@@ -25,14 +27,16 @@ public class LineTo3D : MonoBehaviour
         wallColor = Color.white;
         doorColor = Color.red;
         toDraw = false; //turn into a button
+        hasDrawn = false;
         //Generate3DFloorPlan();
     }
 
     void Update()
     {
-        if (toDraw) {
+        if (toDraw && !hasDrawn) {
             Generate3DFloorPlan();
             toDraw = false;
+            hasDrawn = true;
         }
     }
 
@@ -40,6 +44,11 @@ public class LineTo3D : MonoBehaviour
     void Generate3DFloorPlan()
     {
         // Get the points from the Line Renderer
+        float minX=1000;
+        float maxX= -1000;
+        float minZ = 1000;
+        float maxZ = -1000;
+        float allY=100;
         foreach (GameObject obj in lines) {
             lineRenderer = obj.GetComponent<LineRenderer>();
             int pointCount = lineRenderer.positionCount;
@@ -62,9 +71,39 @@ public class LineTo3D : MonoBehaviour
                 start = swapYZ(start);
                 Vector3 end = points[i + 1]*4;
                 end = swapYZ(end);
+                allY = start.y;
+                if (start.x <= minX) {
+                    minX = start.x;
+                }
+                if (start.x >= maxX) {
+                    maxX = start.x;
+                }
+                if (end.x <= minX)
+                {
+                    minX = end.x;
+                }
+                if (end.x >= maxX)
+                {
+                    maxX = end.x;
+                }
+                if (start.z <= minZ)
+                {
+                    minZ = start.z;
+                }
+                if (start.z >= maxZ)
+                {
+                    maxZ = start.z;
+                }
+                if (end.z <= minZ)
+                {
+                    minZ = end.z;
+                }
+                if (end.z >= maxZ)
+                {
+                    maxZ = end.z;
+                }
                 // Check the color of the current segment
                 Color segmentColor = lineRenderer.startColor; // Line Renderer can only have one color per segment in simple mode
-                Debug.Log(segmentColor);
                 if (segmentColor == wallColor)
                 {
                     CreateWallSegment(floorPlan3D.transform, start, end);
@@ -80,7 +119,21 @@ public class LineTo3D : MonoBehaviour
                 }
             }
         }
-        
+        GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        float width = Mathf.Abs(maxX - minX);
+        float depth = Mathf.Abs(maxZ - minZ);
+        float maxSize = Mathf.Max(width, depth);
+        plane.transform.position = new Vector3((minX+maxX)/2, allY, (minZ+maxZ)/2);
+        plane.transform.localScale = new Vector3(maxSize/10, 1, maxSize/10);
+        Renderer planeRenderer = plane.GetComponent<Renderer>();
+        planeRenderer.material = floorMaterial;
+        /*Vector2 textureScale = new Vector2(
+                5.0f * plane.transform.localScale.x,
+                5.0f * plane.transform.localScale.z
+            );
+        planeRenderer.material.mainTextureScale = textureScale;
+        */
+
     }
 
     Vector3 swapYZ(Vector3 v) {
