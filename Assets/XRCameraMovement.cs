@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.XR;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRCameraMovement : MonoBehaviour
@@ -12,6 +14,7 @@ public class XRCameraMovement : MonoBehaviour
     private CharacterController character;
     private XRController controller;
     public GameObject rig;
+    //public GameObject Stylus;
 
     void Start()
     {
@@ -29,11 +32,11 @@ public class XRCameraMovement : MonoBehaviour
         // Transform direction to be relative to camera's forward direction
         direction = Camera.main.transform.TransformDirection(direction);
         direction.y = 0; // Keep movement on horizontal plane
-        Debug.Log(direction);
         // Apply movement
         if (direction.magnitude > 0.1f) // Add dead zone
         {
             rig.transform.position += direction * moveSpeed * Time.deltaTime;
+            //Stylus.transform.position += direction * moveSpeed * Time.deltaTime;
         }
     }
 }

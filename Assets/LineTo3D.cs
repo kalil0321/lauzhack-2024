@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LineTo3D : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class LineTo3D : MonoBehaviour
     public bool toDraw = false;
     public bool hasDrawn = false;
     public Material floorMaterial;
+    public GameObject rig;
 
     void Start()
     {
@@ -122,9 +124,11 @@ public class LineTo3D : MonoBehaviour
         GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
         float width = Mathf.Abs(maxX - minX);
         float depth = Mathf.Abs(maxZ - minZ);
+        //float width = 100;
+        //float depth = 100;
         float maxSize = Mathf.Max(width, depth);
         plane.transform.position = new Vector3((minX+maxX)/2, allY, (minZ+maxZ)/2);
-        plane.transform.localScale = new Vector3(maxSize/10, 1, maxSize/10);
+        plane.transform.localScale = new Vector3(width/10, 1, depth/10); //increase slightly (or make full area)
         Renderer planeRenderer = plane.GetComponent<Renderer>();
         planeRenderer.material = floorMaterial;
         /*Vector2 textureScale = new Vector2(
@@ -133,6 +137,9 @@ public class LineTo3D : MonoBehaviour
             );
         planeRenderer.material.mainTextureScale = textureScale;
         */
+        rig.transform.position = plane.transform.position;
+        //delay ...
+        //SceneManager.LoadScene (sceneName:"Put the name of the scene here"); Interior design scene
 
     }
 
@@ -177,7 +184,11 @@ public class LineTo3D : MonoBehaviour
         wall.transform.position = start + direction / 2 + Vector3.up * wallHeight / 2;
         wall.transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
         wall.transform.localScale = new Vector3(0.1f, wallHeight, length); // Scale the wall (width, height, length)
-
+        Collider collider = wall.GetComponent<Collider>();
+        if (collider != null)
+        {
+            Destroy(collider);
+        }
         if (doorMaterial != null)
         {
             Renderer renderer = wall.GetComponent<Renderer>();
