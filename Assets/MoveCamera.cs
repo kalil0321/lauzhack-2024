@@ -11,6 +11,7 @@ public class XRCameraMovement : MonoBehaviour
     private Vector2 inputAxis;
     private CharacterController character;
     private XRController controller;
+    public GameObject rig;
 
     void Start()
     {
@@ -25,15 +26,14 @@ public class XRCameraMovement : MonoBehaviour
 
         // Calculate movement direction
         Vector3 direction = new Vector3(inputAxis.x, 0, inputAxis.y);
-
         // Transform direction to be relative to camera's forward direction
         direction = Camera.main.transform.TransformDirection(direction);
         direction.y = 0; // Keep movement on horizontal plane
-
+        Debug.Log(direction);
         // Apply movement
         if (direction.magnitude > 0.1f) // Add dead zone
         {
-            transform.position += direction * moveSpeed * Time.deltaTime;
+            rig.transform.position += direction * moveSpeed * Time.deltaTime;
         }
     }
 }

@@ -2875,6 +2875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   inputSource: 4
+  rig: {fileID: 184503653}
 --- !u!1 &965299805
 GameObject:
   m_ObjectHideFlags: 0
