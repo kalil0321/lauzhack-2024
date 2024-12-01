@@ -13,17 +13,17 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(createInput.text);
+        NetworkManager.Instance.CreateSession(createInput.text);
     }
 
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom(joinInput.text);
+        NetworkManager.Instance.JoinSession(joinInput.text);
     }
 
 
-    public override void OnJoinedRoom()
-    {
-        PhotonNetwork.LoadLevel("House");
-    }
+    // public override void OnJoinedRoom()
+    // {
+    //     PhotonNetwork.LoadLevel("House");
+    // }
 }
