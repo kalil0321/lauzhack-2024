@@ -6,24 +6,19 @@ using Photon.Pun;
 
 public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
-    public TMPro.TMP_InputField createInput;
-    [SerializeField]
-    public TMPro.TMP_InputField joinInput;
-
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(createInput.text);
+        PhotonNetwork.CreateRoom("1234");
     }
 
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom(joinInput.text);
+        PhotonNetwork.JoinRoom("1234");
     }
 
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("House");
+        PhotonNetwork.LoadLevel("Main");
     }
 }

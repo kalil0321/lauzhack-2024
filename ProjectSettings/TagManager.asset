@@ -9,6 +9,8 @@ TagManager:
   - SelW
   - SelR
   - Complete
+  - Architect
+  - Client
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - UI
   - RayCastPlane
   - ButtonLayer
-  - 
+  - ServerSetup
   - 
   - 
   - 
